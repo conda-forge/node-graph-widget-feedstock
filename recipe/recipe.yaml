@@ -1,0 +1,45 @@
+schema_version: 1
+
+context:
+  name: node-graph-widget
+  version: "0.0.5"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/node_graph_widget-${{ version }}.tar.gz
+  sha256: 6ce74d2e15faeb216cf8c79413b7140b64505f337c7f505d3f66a03927ed6841
+
+build:
+  number: 1
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - hatchling
+    - hatch-jupyter-builder
+    - pip
+  run:
+    - python >=${{ python_min }}
+    - anywidget
+
+tests:
+  - python:
+      imports:
+        - node_graph_widget
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  summary: Widget for node-graph
+  license: MIT
+  license_file: LICENSE
+  homepage: https://github.com/scinode/node-graph-widget
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
